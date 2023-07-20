@@ -1,0 +1,7 @@
+{
+  "name": "deepview-alerts",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
