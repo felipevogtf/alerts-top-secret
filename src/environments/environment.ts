@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "http://35.164.172.238:8000",
+  socketUrl: "ws://35.164.172.238:8000/ws/alerts/"
 };
 
 /*

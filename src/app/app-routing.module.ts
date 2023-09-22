@@ -1,22 +1,34 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
+    redirectTo: 'inicio',
+    pathMatch: 'full',
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  }
+    path: 'inicio',
+    loadChildren: () =>
+      import('./pages/inicio/inicio.module').then((m) => m.InicioModule),
+  },
+  {
+    path: 'alerta/:id',
+    loadChildren: () =>
+      import('./pages/alerta/alerta.module').then((m) => m.AlertaModule),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

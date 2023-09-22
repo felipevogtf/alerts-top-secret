@@ -1,0 +1,43 @@
+.user-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--ion-font-family-bold);
+
+  .user-header-text {
+    display: flex;
+    flex-direction: row;
+  }
+
+  ion-button {
+    font-weight: bold;
+  }
+}
+
+.card-input {
+  h3 {
+    margin-inline: 16px;
+  }
+  ion-card {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 10px;
+  }
+}
+
+.bottom-button {
+  background: var(--ion-background-color);
+  position: fixed;
+  bottom: 0;
+  max-width: 1200px;
+  width: 100%;
+
+  ion-button {
+    font-weight: bold;
+  }
+}
+
+.formulario-registro {
+  padding-bottom: 200px;
+}

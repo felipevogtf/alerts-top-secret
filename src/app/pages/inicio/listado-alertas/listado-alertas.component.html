@@ -1,0 +1,89 @@
+<!-- <ion-grid>
+  <ion-row>
+    <ion-col size="4">
+      <ion-card class="card-estadistica">
+        <ion-card-content class="card-estadistica">
+          <ion-icon name="logo-usd" size="large"></ion-icon>
+          <div>
+            <ion-card-subtitle>Monto recuperado</ion-card-subtitle>
+            <ion-card-title>1.000.000</ion-card-title>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="4">
+      <ion-card class="card-estadistica">
+        <ion-card-content class="card-estadistica">
+          <ion-icon name="shield" size="large"></ion-icon>
+          <div>
+            <ion-card-subtitle>Controles realizados</ion-card-subtitle>
+            <ion-card-title>10</ion-card-title>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="4">
+      <ion-card class="card-estadistica">
+        <ion-card-content class="card-estadistica">
+          <ion-icon name="trophy" size="large"></ion-icon>
+          <div>
+            <ion-card-subtitle>Posición</ion-card-subtitle>
+            <ion-card-title>10</ion-card-title>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid> -->
+
+<!-- <div class="seccion-titulo">
+  <h1>Alertas del dia</h1>
+</div> -->
+<section>
+  <ion-grid class="listado-alertas">
+    <ion-row>
+      <ion-col>
+        {{currentDate}}
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!isLoading  && alertas.length > 0">
+      <ion-col size="12" *ngFor="let alerta of alertas">
+        <ion-card [ngClass]="obtenerClaseAlerta(alerta)" button (click)="verAlerta(alerta.id)">
+          <ion-card-content class="card-alerta">
+            <div>
+              <ion-card-subtitle>Zona {{alerta.zona}} - Caja {{alerta.caja}}</ion-card-subtitle>
+              <ion-card-title>{{alerta.tipo}}</ion-card-title>
+            </div>
+            <div class="card-alerta-fecha">
+              <ion-card-title>{{alerta.fecha | date: 'HH:mm'}}</ion-card-title>
+              <ion-card-subtitle>{{alerta.fecha | date: 'dd-MM-yyyy'}}</ion-card-subtitle>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!isLoading && alertas.length === 0">
+      <ion-col>
+        <ion-card class="card-info">
+          <ion-card-content class="card-info-content">
+            <div>
+              <ion-icon name="information-circle"></ion-icon>
+            </div>
+            <div>
+              <ion-card-title>No hay alertas para mostrar</ion-card-title>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="isLoading">
+      <ion-col class="alertas-loading">
+        <ion-spinner name="dots"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</section>

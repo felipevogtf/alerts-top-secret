@@ -1,0 +1,68 @@
+ion-item {
+  --border-color: lightgray;
+  --border-style: solid;
+  --border-width: 2px;
+  --border-radius: 14px;
+
+  --transition: border-color 0.2s;
+
+  ion-icon {
+    color: var(--ion-text-color);
+    transition: color 0.2s;
+  }
+}
+
+ion-item:focus-within {
+  --border-color: var(--ion-color-primary);
+
+  ion-icon {
+    color: var(--ion-color-primary);
+  }
+}
+
+.login-button {
+  span {
+    padding: 6px 0px;
+  }
+}
+
+.login-info {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  color: var(--ion-text-color);
+}
+
+.logo {
+  max-width: 50%;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.login-section {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+}
+
+.login-content {
+  --background: var(--ion-color-primary-shade);
+}
+
+.login-error {
+  margin-top: 20px;
+  background: var(--ion-color-danger-light);
+  color: var(--ion-color-danger-contrast);
+  border-radius: 14px;
+  padding: 10px;
+}
+
+.login-warning {
+  margin-top: 20px;
+  background: var(--ion-color-warning-light);
+  color: var(--ion-color-warning-contrast);
+  border-radius: 14px;
+  padding: 10px;
+}

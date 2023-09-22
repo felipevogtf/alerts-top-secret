@@ -1,18 +1,29 @@
 import { Component } from '@angular/core';
+import { AlertaService } from './services/alerta.service';
+import { alertasDummy } from './data/alertas-dummy';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
-  ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  constructor(private alertaService: AlertaService, private router: Router) {}
+
+  ngOnInit(): void {
+    alertasDummy.forEach((alerta) => {
+      //this.alertaService.agregarAlerta(alerta);
+    });
+
+    this.alertaService.suscribirseAlertas().subscribe((alertas) => {
+      console.log(alertas);
+      // this.router.navigate(['/home']);
+
+      setTimeout(() => {
+        this.router.navigate(['/alerta', alertas[0].id]);
+      }, 1);
+    });
+
+    this.alertaService.alertasSubscribe();
+  }
 }

@@ -1,0 +1,46 @@
+<ion-content class="login-content">
+  <section class="login-section">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="8" offset-md="2">
+          <ion-card>
+            <ion-card-content [formGroup]="loginForm">
+              <ion-img class="logo" src="assets/logos/logo.svg" alt="logo"></ion-img>
+
+              <div class="login-info">
+                Si no tienes cuenta, pídele a tu jefe AP que te registre.
+              </div>
+
+              <ion-item lines="full">
+                <ion-input label="Rut" label-placement="floating" placeholder="Rut" formControlName="username">
+                </ion-input>
+                <ion-icon name="person" size="large" slot="start"></ion-icon>
+              </ion-item>
+              <br />
+              <ion-item lines="full">
+                <ion-input label="Contreseña" label-placement="floating" placeholder="Contraseña"
+                  formControlName="password" [type]="showPassword ? 'text' : 'password'"></ion-input>
+                <ion-icon name="lock-closed" size="large" slot="start"></ion-icon>
+
+                <ion-button fill="clear" slot="end" *ngIf="loginForm.value.password"
+                  (click)="togglePasswordVisibility()" [disabled]="loginForm.disabled">
+                  <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" size="large"></ion-icon>
+                </ion-button>
+              </ion-item>
+
+              <br />
+              <ion-button expand="block" (click)="login()" class="login-button">
+                <span *ngIf="!isLoading">Iniciar sesión</span>
+                <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
+              </ion-button>
+
+              <div *ngIf="error" [class]="error.tipo == ErrorFormTipo.ERROR ? 'login-error' : 'login-warning'">
+                {{ error.mensaje }}
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>

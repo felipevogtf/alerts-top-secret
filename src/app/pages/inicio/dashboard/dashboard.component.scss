@@ -1,0 +1,204 @@
+.card-estadistica {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 20px;
+
+  --background: linear-gradient(
+    0deg,
+    var(--ion-color-secondary) 0%,
+    var(--ion-color-secondary-light) 100%
+  );
+  --color: var(--ion-color-secondary-contrast, #fff) !important;
+
+  ion-card-title,
+  ion-card-subtitle {
+    --color: var(--ion-color-secondary-contrast, #fff) !important;
+  }
+  ion-card-title {
+    font-family: var(--ion-font-family-bold);
+  }
+}
+
+.ranking-card {
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  ion-card-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    background: linear-gradient(
+      45deg,
+      var(--ion-color-primary) 30%,
+      var(--ion-color-primary-light) 100%
+    );
+
+
+    ion-card-title {
+      z-index: 2;
+      font-size: 1.8em;
+      margin-bottom: 5px;
+      color: var(--ion-color-primary-contrast, #fff);
+    }
+
+    ion-card-subtitle {
+      z-index: 2;
+      font-size: 1.3em;
+      color: var(--ion-color-primary-contrast, #fff);
+      opacity: 0.7;
+    }
+
+    ion-icon{
+      color: var(--ion-color-primary-contrast, #fff);
+    }
+  }
+
+  // ion-card-header::after {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background-image: url("https://images.emojiterra.com/google/noto-emoji/unicode-15/color/512px/1f3c6.png");
+  //   background-repeat: no-repeat; /* Evita que la imagen se repita */
+  //   background-size: 100px 100px; /* Escala la imagen para cubrir el fondo */
+  //   z-index: 1; /* Asegura que la imagen esté encima del fondo */
+  // }
+
+  ion-card-content {
+    .ranking-item {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      margin-inline: 0;
+
+      .ranking-item-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .user-stats {
+          h1 {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: black;
+          }
+
+          h2 {
+            color: gray;
+          }
+        }
+
+        .user-position {
+          font-size: 1.5em;
+          font-weight: bold;
+          color: black;
+        }
+
+        .ranking-item-user {
+          display: flex;
+          flex-direction: row;
+          column-gap: 20px;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+.ranking {
+  .ranking-name {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 10px;
+  }
+}
+
+.ranking:nth-child(-n + 3) {
+  .ranking-position {
+    font-family: var(--ion-font-family-bold);
+  }
+  .ranking-name {
+    font-weight: bold;
+  }
+  .ranking-value {
+    font-family: var(--ion-font-family-bold);
+  }
+}
+
+.ranking-item:nth-child(1) {
+  background: #ffbf00 !important;
+
+  .user-stats {
+    h1 {
+      color: white !important;
+    }
+
+    h2 {
+      color: white !important;
+      opacity: .8;
+    }
+  }
+  .user-position {
+    color: white !important;
+  }
+}
+
+.ranking-item:nth-child(2) {
+  background: #c0c0c0 !important;
+
+  .user-stats {
+    h1 {
+      color: white !important;
+    }
+
+    h2 {
+      color: white !important;
+      opacity: .8;
+    }
+  }
+  .user-position {
+    color: white !important;
+  }
+}
+
+.ranking-item:nth-child(3) {
+  background: #cd7f32 !important;
+
+  .user-stats {
+    h1 {
+      color: white !important;
+    }
+
+    h2 {
+      color: white !important;
+      opacity: .8;
+    }
+  }
+  .user-position {
+    color: white !important;
+  }
+}
+
+
+.ranking:nth-child(2) {
+  font-size: 1.1em;
+  ion-icon {
+    color: #c0c0c0;
+    font-size: 1.3em;
+  }
+}
+
+.ranking:nth-child(3) {
+  background: red !important;
+  ion-icon {
+    color: #cd7f32;
+    font-size: 1.2em;
+  }
+}
