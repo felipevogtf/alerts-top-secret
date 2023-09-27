@@ -20,6 +20,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AlertaService {
   alertas: Alerta[] = [];
   private alertasSubject: Subject<Alerta[]> = new Subject<Alerta[]>();
+  isSocketSuscribe: boolean = false;
+
   webSocket: WebSocketSubject<AlertaSocket> = webSocket(environment.socketUrl);
   headers = {
     headers: new HttpHeaders({
@@ -168,9 +170,16 @@ export class AlertaService {
         this.agregarAlerta(alerta);
       },
       error: (error: any) => {
+        if (this.isSocketSuscribe) {
+          this.alertasSubscribe();
+        }
         console.error('Error:', error);
       },
       complete: () => {
+        console.log(this.isSocketSuscribe)
+        if (this.isSocketSuscribe) {
+          this.alertasSubscribe();
+        }
         console.log('Conexión cerrada');
       },
     };
@@ -204,9 +213,14 @@ export class AlertaService {
         })
       )
       .subscribe(observer);
+
+    this.isSocketSuscribe = true;
   }
 
   alertasUnSubscribe() {
-    this.webSocket.complete();
+    if (this.isSocketSuscribe) {
+      this.isSocketSuscribe = false;
+      this.webSocket.complete();
+    }
   }
 }

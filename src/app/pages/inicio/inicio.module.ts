@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { InicioComponent } from './inicio/inicio.component';
 import { IonicModule } from '@ionic/angular';
+import { authGuardCheck } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
           import('./listado-alertas/listado-alertas.module').then(
             (m) => m.ListadoAlertasModule
           ),
+        canActivate: [authGuardCheck],
       },
       {
         path: 'usuarios',
@@ -22,13 +24,13 @@ const routes: Routes = [
           import('./gestion-usuarios/gestion-usuarios.module').then(
             (m) => m.GestionUsuariosModule
           ),
+        canActivate: [authGuardCheck],
       },
       {
         path: 'dashboard',
         loadChildren: () =>
-          import('./dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
-          ),
+          import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+        canActivate: [authGuardCheck],
       },
     ],
   },

@@ -6,22 +6,23 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { StorageService } from '../services/storage.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 class AuthGuard {
-  constructor(private router: Router, private storageService: StorageService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   async canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
-    const token = await this.storageService.get('_t');
+    const token = await this.authService.isLogged();
 
     if (token) {
+      this.authService.setLoginState(true);
       if (state.url === '/login') {
         this.router.navigate(['/']);
         return false;
@@ -29,6 +30,7 @@ class AuthGuard {
 
       return true;
     } else {
+      this.authService.setLoginState(false);
       this.router.navigate(['/login']);
       return false;
     }

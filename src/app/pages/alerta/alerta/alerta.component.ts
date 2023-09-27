@@ -5,7 +5,7 @@ import { AlertaService } from 'src/app/services/alerta.service';
 import { Alerta, AlertaGestion } from 'src/app/models/alerta/alerta.model';
 import { AlertaEstadoGestion } from 'src/app/models/alerta/alerta-estado-gestion.model';
 import { AlertaEstado } from 'src/app/models/alerta/alerta-estado.model';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-alerta',
@@ -29,7 +29,7 @@ export class AlertaComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private alertaService: AlertaService,
-    private toastController: ToastController
+    private toastService: ToastService
   ) {
     this.alertaExist = false;
   }
@@ -152,12 +152,18 @@ export class AlertaComponent implements OnInit {
     this.setGestionLoading(true);
     this.alertaService.gestionar(data, this.alerta.id).subscribe({
       next: (response: any) => {
-        this.presentToast('top', 'Alerta gestionada con exito!');
+        this.toastService.presentToast(
+          'Alerta gestionada con exito!',
+          'success'
+        );
         this.router.navigate(['/']);
         this.setGestionLoading(false);
       },
       error: (error: Error) => {
-        this.presentToast('top', 'Ha ocurrido un problema, intente nuevamente');
+        this.toastService.presentToast(
+          'Ha ocurrido un problema, intente nuevamente!',
+          'danger'
+        );
         console.error('Error en la solicitud:', error);
         this.setGestionLoading(false);
       },
@@ -170,17 +176,6 @@ export class AlertaComponent implements OnInit {
     } else {
       return 'background-default';
     }
-  }
-
-  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje: string) {
-    const toast = await this.toastController.create({
-      message: mensaje,
-      duration: 1500,
-      position: position,
-      color: 'dark',
-    });
-
-    await toast.present();
   }
 
   pasoAnterior() {

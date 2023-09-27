@@ -6,25 +6,27 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { StorageService } from '../services/storage.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 class LoginGuard {
-  constructor(private router: Router, private storageService: StorageService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   async canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
-    const token = await this.storageService.get('_t');
+    const token = await this.authService.isLogged();
 
     if (token) {
+      this.authService.setLoginState(true);
       this.router.navigate(['/']);
       return false;
     } else {
+      this.authService.setLoginState(false);
       return true;
     }
   }

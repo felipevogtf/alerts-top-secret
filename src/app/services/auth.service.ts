@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, retry, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  retry,
+  throwError,
+} from 'rxjs';
 import { LoginData, LoginResponse } from '../models/login/login.model';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
@@ -11,8 +17,10 @@ import { StorageService } from './storage.service';
 export class AuthService {
   constructor(
     private http: HttpClient,
-    private storagaService: StorageService
+    private storageService: StorageService
   ) {}
+
+  private loginSubject = new BehaviorSubject<boolean>(false);
 
   login(data: LoginData): Observable<LoginResponse> {
     const httpOptions = {
@@ -50,13 +58,28 @@ export class AuthService {
   logout() {
     return new Promise((res, rej) => {
       try {
-        this.storagaService.remove('_t');
-        this.storagaService.remove('_r');
-        this.storagaService.remove('_ut');
+        this.storageService.remove('_t');
+        this.storageService.remove('_r');
+        this.storageService.remove('_ut');
         res(true);
       } catch (error) {
         rej();
       }
     });
+  }
+
+  loginState(): Observable<boolean> {
+    return this.loginSubject.asObservable();
+  }
+
+  setLoginState(value: boolean): void {
+    if (value !== this.loginSubject.value) {
+      this.loginSubject.next(value);
+    }
+  }
+
+  async isLogged(): Promise<boolean> {
+    const token = await this.storageService.get('_t');
+    return token ? true : false;
   }
 }
