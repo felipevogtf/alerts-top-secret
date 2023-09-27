@@ -1,9 +1,10 @@
-export interface ErrorForm { 
+export interface MensajeForm { 
     mensaje: String,
-    tipo: ErrorFormTipo
+    tipo: MensajeFormTipo
 }
 
-export enum ErrorFormTipo {
+export enum MensajeFormTipo {
     WARNING,
-    ERROR
+    ERROR,
+    SUCCESS
 }

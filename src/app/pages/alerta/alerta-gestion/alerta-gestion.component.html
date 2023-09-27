@@ -1,56 +1,52 @@
-<ion-grid class="alerta-descarte">
-  <ion-row>
-    <ion-col>
-      <h3>Seleccione un motivo de descarte</h3>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="12" size-md="4">
-      <ion-button expand="block" class="custom-button ion-text-wrap">
-        Descartar alerta
-      </ion-button>
-    </ion-col>
-    <ion-col size="12" size-md="4">
-      <ion-button expand="block" class="custom-button active ion-text-wrap">
-        Descartar alerta
-      </ion-button>
-    </ion-col>
-    <ion-col size="12" size-md="4">
-      <ion-button expand="block" class="custom-button ion-text-wrap">
-        Descartar alerta
-      </ion-button>
-    </ion-col>
-    <ion-col size="12" size-md="4">
-      <ion-button expand="block" class="custom-button ion-text-wrap">
-        Descartar alerta
-      </ion-button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div [ngSwitch]="alerta.estado_gestion" *ngIf="alerta">
 
-<ion-grid class="alerta-control">
-  <ion-row>
-    <ion-col>
-      <h3>Ingrese monto recuperado</h3>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="12" size-md="8">
-      <ion-card class="card-input">
-        <ion-icon name="logo-usd"></ion-icon>
-        <ion-input type="number" fill="solid" placeholder="Ingrese monto"></ion-input>
-      </ion-card>
-    </ion-col>
-    <ion-col size="12" size-md="4">
-      <ion-button expand="block" class="custom-button">
-        <ion-icon name="checkbox" slot="start"></ion-icon>
-        <span>Detenido</span>
-      </ion-button>
-    </ion-col>
-    <ion-col size="12">
-      <ion-button expand="block" class="custom-button active">
-        Sin recuperación
-      </ion-button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ng-template [ngSwitchCase]="AlertaEstadoGestion.ALERTA_DESCARTADA">
+    <ion-grid class="alerta-descarte">
+      <ion-row>
+        <ion-col class="formulario-titulo">
+          <h1>Seleccione un motivo de descarte</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center formulario-contenido">
+        <ion-col size="12" size-md="4" *ngFor="let motivo of listadoOpciones; let i = index">
+          <ion-button expand="block" class="custom-button ion-text-wrap"
+            [ngClass]="opcionSeleccionada === i ? 'active' : ''" (click)="seleccionarOpcion(i)">
+            {{motivo.value}}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="AlertaEstadoGestion.CONTROL_BOLETA">
+    <ion-grid class="alerta-control">
+      <ion-row>
+        <ion-col class="formulario-titulo">
+          <h1>Ingrese monto recuperado</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row class="formulario-contenido">
+        <ion-col size="12" size-md="8">
+          <ion-card class="card-input">
+            <ion-icon name="logo-usd"></ion-icon>
+            <ion-input type="number" fill="solid" placeholder="Ingrese monto"></ion-input>
+          </ion-card>
+        </ion-col>
+        <ion-col size="12" size-md="4">
+          <ion-button expand="block" class="custom-button">
+            <ion-icon name="checkbox" slot="start"></ion-icon>
+            <span>Detenido</span>
+          </ion-button>
+        </ion-col>
+        <ion-col size="12">
+          <ion-button expand="block" class="custom-button active">
+            Sin recuperación
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
+
+
+</div>

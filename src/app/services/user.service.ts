@@ -1,28 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, retry, throwError } from 'rxjs';
-import { LoginData, LoginResponse } from '../models/login/login.model';
 import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Usuario } from '../models/user/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class UserService {
+  headers = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      AuthorizationRequired: 'true',
+    }),
+  };
+
   constructor(private http: HttpClient) {}
 
-  login(data: LoginData): Observable<LoginResponse> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-
+  getUsers(): Observable<Usuario[]> {
     return this.http
-      .post<LoginResponse>(
-        `${environment.apiUrl}/users/login/`,
-        data,
-        httpOptions
-      )
+      .get<Usuario[]>(`${environment.apiUrl}/users/list/`, this.headers)
+      .pipe(
+        retry(3),
+        catchError((error) => {
+          let errorMessage =
+            'Ocurrió un error en la solicitud. Por favor, inténtalo de nuevo más tarde.';
+
+          console.error(error);
+          return throwError(() => new Error(errorMessage));
+        })
+      );
+  }
+
+  registrar(data: Usuario): Observable<any> {
+    return this.http
+      .post<any>(`${environment.apiUrl}/users/sign-up/`, data, this.headers)
       .pipe(
         retry(3),
         catchError((error) => {
@@ -42,4 +54,4 @@ export class AuthService {
         })
       );
   }
-}
+} 

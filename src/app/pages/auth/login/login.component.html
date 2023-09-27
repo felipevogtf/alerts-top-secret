@@ -5,7 +5,7 @@
         <ion-col size="12" size-md="8" offset-md="2">
           <ion-card>
             <ion-card-content [formGroup]="loginForm">
-              <ion-img class="logo" src="assets/logos/logo.svg" alt="logo"></ion-img>
+              <ion-img class="logo" src="assets/logos/logo.png" alt="logo"></ion-img>
 
               <div class="login-info">
                 Si no tienes cuenta, pídele a tu jefe AP que te registre.
@@ -34,7 +34,7 @@
                 <ion-spinner name="dots" *ngIf="isLoading"></ion-spinner>
               </ion-button>
 
-              <div *ngIf="error" [class]="error.tipo == ErrorFormTipo.ERROR ? 'login-error' : 'login-warning'">
+              <div *ngIf="error" [class]="error.tipo == MensajeFormTipo.ERROR ? 'login-error' : 'login-warning'">
                 {{ error.mensaje }}
               </div>
             </ion-card-content>

@@ -1,4 +1,4 @@
 export enum AlertaPaso {
   Preview,
-  Gestion
+  Gestion,
 }

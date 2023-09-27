@@ -22,15 +22,16 @@ export class ListadoAlertasComponent implements OnInit {
   ngOnInit() {
     this.obtenerAlertas();
 
-    setInterval(() => {
-      this.currentDate = new Date();
-    }, 1000);
+    // setInterval(() => {
+    //   this.currentDate = new Date();
+    // }, 1000);
   }
 
   obtenerAlertas() {
     this.setLoading(true);
     this.alertaService.getAlertas().subscribe({
       next: (response) => {
+
         this.alertaService.setAlertas(response);
         this.alertas = this.alertaService.alertas;
 
@@ -58,13 +59,14 @@ export class ListadoAlertasComponent implements OnInit {
   verificarEstado(alerta: Alerta): AlertaEstado {
     const fechaActual = new Date();
 
-    if (alerta.fechaVencimiento) {
-      return fechaActual.getTime() >= alerta.fechaVencimiento.getTime()
-        ? AlertaEstado.VENCIDA
-        : alerta.estado;
-    } else {
-      return alerta.estado;
-    }
+    // if (alerta.fechaVencimiento) {
+    //   return fechaActual.getTime() >= alerta.fechaVencimiento.getTime()
+    //     ? AlertaEstado.VENCIDA
+    //     : alerta.estado;
+    // } else {
+    //   return alerta.estado;
+    // }
+    return alerta.estado;
   }
 
   obtenerClaseAlerta(alerta: Alerta): String {

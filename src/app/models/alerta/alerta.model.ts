@@ -38,6 +38,14 @@ export interface AlertaApi {
   last_transactions: LastTransaction[];
 }
 
+export interface AlertaGestion {
+  is_alarm: boolean;
+  losses: number;
+  recover: boolean;
+  discard: number;
+}
+
+
 export interface LastTransaction {
   id: number;
   paydesk: number;

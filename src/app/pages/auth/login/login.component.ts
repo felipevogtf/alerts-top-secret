@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ErrorForm, ErrorFormTipo } from 'src/app/models/errorForm.model';
-import { LoginData } from 'src/app/models/login/login.model';
+import { Router } from '@angular/router';
+import { MensajeForm, MensajeFormTipo } from 'src/app/models/errorForm.model';
+import { LoginData, LoginResponse } from 'src/app/models/login/login.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -16,8 +17,8 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required],
   });
 
-  ErrorFormTipo = ErrorFormTipo;
-  error: ErrorForm | null = null;
+  MensajeFormTipo = MensajeFormTipo;
+  error: MensajeForm | null = null;
   showPassword: Boolean = false;
 
   isLoading: Boolean = false;
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router
   ) {}
 
   ngOnInit() {}
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.error = {
         mensaje: 'Complete todos los campos',
-        tipo: ErrorFormTipo.WARNING,
+        tipo: MensajeFormTipo.WARNING,
       };
       return;
     }
@@ -48,14 +50,18 @@ export class LoginComponent implements OnInit {
 
     this.setLoading(true);
     this.authService.login(data).subscribe({
-      next: (response) => {
+      next: (response: LoginResponse) => {
         this.storageService.set('_t', response.token);
+        this.storageService.set('_r', response.rut);
+        this.storageService.set('_ut', response.user_type);
         this.setLoading(false);
+
+        this.router.navigate(['/inicio']);
       },
       error: (error: Error) => {
         this.error = {
           mensaje: error.message,
-          tipo: ErrorFormTipo.ERROR,
+          tipo: MensajeFormTipo.ERROR,
         };
         console.error('Error en la solicitud:', error);
         this.setLoading(false);

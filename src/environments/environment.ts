@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://35.164.172.238:8000",
-  socketUrl: "ws://35.164.172.238:8000/ws/alerts/"
+  apiUrl: "http://54.203.104.221:8000",
+  socketUrl: "ws://54.203.104.221:8000/ws/alerts/"
 };
 
 /*

@@ -4,5 +4,7 @@ export interface LoginData {
 }
 
 export interface LoginResponse{
-  token: String
+  token: string,
+  rut: string,
+  user_type: string,
 }

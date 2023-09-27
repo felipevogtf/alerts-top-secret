@@ -7,9 +7,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DatePipe } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
+import { AuthInterceptor } from './interceptos/auth.interceptor';
+import { LightgalleryModule } from 'lightgallery/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,9 +26,15 @@ import { Drivers } from '@ionic/storage';
     }),
     AppRoutingModule,
     HttpClientModule,
+    LightgalleryModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     DatePipe,
   ],
   bootstrap: [AppComponent],

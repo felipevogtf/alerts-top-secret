@@ -16,7 +16,7 @@ export class AppComponent {
     });
 
     this.alertaService.suscribirseAlertas().subscribe((alertas) => {
-      console.log(alertas);
+      //console.log(alertas);
       // this.router.navigate(['/home']);
 
       setTimeout(() => {

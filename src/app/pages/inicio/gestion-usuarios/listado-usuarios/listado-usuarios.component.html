@@ -2,9 +2,8 @@
   <ion-row>
     <ion-col size="12" class="user-header">
       <div class="user-header-text">
-        <ion-button fill="clear" color="dark" routerLink="../"
-          ><ion-icon name="arrow-back" size="large"></ion-icon
-        ></ion-button>
+        <ion-button fill="clear" color="dark" routerLink="../"><ion-icon name="arrow-back"
+            size="large"></ion-icon></ion-button>
         <h1>Usuarios</h1>
       </div>
 
@@ -18,92 +17,50 @@
   <ion-row>
     <ion-col size="12">
       <ion-card class="search-input">
-        <ion-input
-          label="Usuario"
-          label-placement="floating"
-          placeholder="Ingrese usuario"
-        ></ion-input>
+        <ion-input label="Usuario" label-placement="floating" placeholder="Ingrese usuario"></ion-input>
         <ion-icon name="search" size="large"></ion-icon>
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row class="lista-usuarios">
-    <ion-col size="12">
+  <ion-row class="lista-usuarios" *ngIf="!isLoading  && usuarios.length > 0">
+    <ion-col size="12" *ngFor="let user of usuarios">
       <ion-card class="card-user">
         <ion-card-content>
           <div class="user-content">
             <ion-avatar>
-              <img
-                alt="Silhouette of a person's head"
-                src="https://ionicframework.com/docs/img/demos/avatar.svg"
-              />
+              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
 
-            <ion-card-title>Felipe Vogt</ion-card-title>
+            <ion-card-title>{{user.first_name}} {{user.last_name}}</ion-card-title>
           </div>
 
           <div class="opciones">
-            <ion-button fill="clear" color="dark"
-              ><ion-icon name="refresh" size="large"></ion-icon
-            ></ion-button>
-            <ion-button fill="clear" color="dark"
-              ><ion-icon name="trash" size="large"></ion-icon
-            ></ion-button>
+            <ion-button fill="clear" color="dark"><ion-icon name="refresh" size="large"></ion-icon></ion-button>
+            <ion-button fill="clear" color="dark"><ion-icon name="trash" size="large"></ion-icon></ion-button>
           </div>
         </ion-card-content>
       </ion-card>
     </ion-col>
+  </ion-row>
 
-    <ion-col size="12">
-      <ion-card class="card-user">
-        <ion-card-content>
-          <div class="user-content">
-            <ion-avatar>
-              <img
-                alt="Silhouette of a person's head"
-                src="https://ionicframework.com/docs/img/demos/avatar.svg"
-              />
-            </ion-avatar>
-
-            <ion-card-title>Felipe Vogt</ion-card-title>
+  <ion-row *ngIf="!isLoading && usuarios.length === 0">
+    <ion-col>
+      <ion-card class="card-info">
+        <ion-card-content class="card-info-content">
+          <div>
+            <ion-icon name="information-circle"></ion-icon>
           </div>
-
-          <div class="opciones">
-            <ion-button fill="clear" color="dark"
-              ><ion-icon name="refresh" size="large"></ion-icon
-            ></ion-button>
-            <ion-button fill="clear" color="dark"
-              ><ion-icon name="trash" size="large"></ion-icon
-            ></ion-button>
+          <div>
+            <ion-card-title>No hay usuarios para mostrar</ion-card-title>
           </div>
         </ion-card-content>
       </ion-card>
     </ion-col>
+  </ion-row>
 
-    <ion-col size="12">
-      <ion-card class="card-user">
-        <ion-card-content>
-          <div class="user-content">
-            <ion-avatar>
-              <img
-                alt="Silhouette of a person's head"
-                src="https://ionicframework.com/docs/img/demos/avatar.svg"
-              />
-            </ion-avatar>
-
-            <ion-card-title>Felipe Vogt</ion-card-title>
-          </div>
-
-          <div class="opciones">
-            <ion-button fill="clear" color="dark"
-              ><ion-icon name="refresh" size="large"></ion-icon
-            ></ion-button>
-            <ion-button fill="clear" color="dark"
-              ><ion-icon name="trash" size="large"></ion-icon
-            ></ion-button>
-          </div>
-        </ion-card-content>
-      </ion-card>
+  <ion-row *ngIf="isLoading">
+    <ion-col class="usuarios-loading">
+      <ion-spinner name="dots"></ion-spinner>
     </ion-col>
   </ion-row>
 </ion-grid>

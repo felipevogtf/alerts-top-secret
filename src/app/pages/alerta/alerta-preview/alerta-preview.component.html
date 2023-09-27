@@ -1,14 +1,14 @@
 <ion-grid class="alerta-contenido" *ngIf="alerta">
   <ion-row class="titulo">
     <ion-col size="12">
-      <h3>{{alerta.fecha | date: 'HH:mm'}}</h3>
+      <h3>{{alerta.fecha | date: 'HH:mm:ss'}}</h3>
       <h1>Caja {{alerta.caja}} - {{alerta.tipo}}</h1>
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col size="12" size-md="7" class="alerta-preview">
-      <img [src]="alerta.imagen" alt="Imagen de prueba" />
+      <img [src]="alerta.imagen" alt="Imagen de prueba" (click)="openImage(asd)" #asd/>
     </ion-col>
 
     <ion-col size="12" size-md="5" class="historial-compras">
@@ -19,6 +19,30 @@
           <ion-col size="4" size-md="6" class="compras-preview" *ngFor="let compra of alerta.ultimasCompras">
             <img [src]="compra.image" alt="Imagen de prueba" />
           </ion-col>
+          <!-- <ion-col size="4" size-md="6" class="compras-preview">
+            <img src="assets/imgs/test.jpg" alt="Imagen de prueba" />
+            <div class="img-text">Caja 1</div>
+          </ion-col>
+
+          <ion-col size="4" size-md="6" class="compras-preview">
+            <img src="assets/imgs/test.jpg" alt="Imagen de prueba" />
+            <div class="img-text">Caja 1</div>
+          </ion-col>
+
+          <ion-col size="4" size-md="6" class="compras-preview">
+            <img src="assets/imgs/test.jpg" alt="Imagen de prueba" />
+            <div class="img-text">Caja 1</div>
+          </ion-col>
+
+          <ion-col size="4" size-md="6" class="compras-preview">
+            <img src="assets/imgs/test.jpg" alt="Imagen de prueba" />
+            <div class="img-text">Caja 1</div>
+          </ion-col>
+
+          <ion-col size="4" size-md="6" class="compras-preview">
+            <img src="assets/imgs/test.jpg" alt="Imagen de prueba" />
+            <div class="img-text">Caja 1</div>
+          </ion-col> -->
         </ion-row>
       </ion-grid>
     </ion-col>

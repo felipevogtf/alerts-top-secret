@@ -3,7 +3,12 @@ import { Observable, Subject, catchError, map, retry, throwError } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { AlertaEstado } from '../models/alerta/alerta-estado.model';
 import { AlertaTipo, alertaTipoMap } from '../models/alerta/alerta-tipo.model';
-import { Alerta, AlertaApi, AlertaSocket } from '../models/alerta/alerta.model';
+import {
+  Alerta,
+  AlertaApi,
+  AlertaGestion,
+  AlertaSocket,
+} from '../models/alerta/alerta.model';
 import { addMinutes, parseISO } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 import { environment } from 'src/environments/environment';
@@ -16,20 +21,20 @@ export class AlertaService {
   alertas: Alerta[] = [];
   private alertasSubject: Subject<Alerta[]> = new Subject<Alerta[]>();
   webSocket: WebSocketSubject<AlertaSocket> = webSocket(environment.socketUrl);
+  headers = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      AuthorizationRequired: 'true',
+    }),
+  };
 
   constructor(private http: HttpClient) {}
 
   getAlertas(): Observable<Alerta[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-
     return this.http
       .get<AlertaApi[]>(
-        `${environment.apiUrl}/notification/alarms_list`,
-        httpOptions
+        `${environment.apiUrl}/notification/alarms_list/`,
+        this.headers
       )
       .pipe(
         retry(3),
@@ -66,16 +71,10 @@ export class AlertaService {
   }
 
   getAlerta(id: Number): Observable<Alerta> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-
     return this.http
       .get<AlertaApi>(
         `${environment.apiUrl}/notification/alarm/${id}`,
-        httpOptions
+        this.headers
       )
       .pipe(
         retry(3),
@@ -104,6 +103,25 @@ export class AlertaService {
           };
 
           return alerta;
+        })
+      );
+  }
+
+  gestionar(data: AlertaGestion, id: Number): Observable<any> {
+    return this.http
+      .post<any>(
+        `${environment.apiUrl}/alarm/categorize/${id}/`,
+        data,
+        this.headers
+      )
+      .pipe(
+        retry(3),
+        catchError((error) => {
+          let errorMessage =
+            'Ocurrió un error en la solicitud. Por favor, inténtalo de nuevo más tarde.';
+
+          console.error(error);
+          return throwError(() => new Error(errorMessage));
         })
       );
   }
@@ -146,7 +164,7 @@ export class AlertaService {
     // Crear un objeto Observer
     const observer = {
       next: (alerta: Alerta) => {
-        console.log(alerta);
+        console.log('Alerta nueva', alerta.fecha);
         this.agregarAlerta(alerta);
       },
       error: (error: any) => {
