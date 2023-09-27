@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   MotivoDescarte,
   TipoAlertaConMotivos,
@@ -15,16 +15,23 @@ import { Alerta } from 'src/app/models/alerta/alerta.model';
 })
 export class AlertaGestionComponent implements OnInit {
   @Input() alerta: Alerta | null = null;
+  @Output() motivoDescarte = new EventEmitter<number | null>();
+  @Output() montoRecuperacion = new EventEmitter<number>();
+  @Output() detenido = new EventEmitter<boolean>();
+  @Output() recuperacion = new EventEmitter<boolean>();
+  @Output() back = new EventEmitter<void>();
+
   AlertaEstadoGestion = AlertaEstadoGestion;
   listadoOpciones: any[] = [];
 
-  opcionSeleccionada: Number | null = null;
+  opcionDescarteSeleccionado: number | null = null;
+  opcionDetenido: boolean = false;
+  opcionMontoRecuperacion: boolean = false;
+  valorMontoRecuperacion: number = 0;
 
   constructor() {}
 
   ngOnInit() {
-    console.log(this.alerta);
-
     if (this.alerta) {
       this.listadoOpciones = this.obtenerMotivosDescarte(this.alerta.tipo);
     }
@@ -40,11 +47,40 @@ export class AlertaGestionComponent implements OnInit {
     }
   }
 
-  seleccionarOpcion(indice: Number): void {
-    if (indice === this.opcionSeleccionada) {
-      this.opcionSeleccionada = null;
+  seleccionarOpcion(indice: number): void {
+    if (indice === this.opcionDescarteSeleccionado) {
+      this.opcionDescarteSeleccionado = null;
+      this.motivoDescarte.emit(null);
     } else {
-      this.opcionSeleccionada = indice;
+      this.opcionDescarteSeleccionado = indice;
+      this.motivoDescarte.emit(
+        this.listadoOpciones[this.opcionDescarteSeleccionado].id
+      );
     }
+  }
+
+  seleccionarSinRecuperacion() {
+    if (this.opcionMontoRecuperacion) {
+      this.opcionMontoRecuperacion = false;
+    } else {
+      this.valorMontoRecuperacion = 0;
+      this.opcionMontoRecuperacion = true;
+    }
+
+    this.montoRecuperacion.emit(this.valorMontoRecuperacion);
+    this.recuperacion.emit(this.opcionMontoRecuperacion);
+  }
+
+  seleccionarDetenido() {
+    this.opcionDetenido = !this.opcionDetenido;
+    this.detenido.emit(this.opcionDetenido);
+  }
+
+  cambiarMontoRecuperacion() {
+    this.montoRecuperacion.emit(this.valorMontoRecuperacion);
+  }
+
+  pasoAnterior() {
+    this.back.emit();
   }
 }

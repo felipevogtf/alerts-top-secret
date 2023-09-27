@@ -70,7 +70,7 @@ export class AlertaService {
       );
   }
 
-  getAlerta(id: Number): Observable<Alerta> {
+  getAlerta(id: number): Observable<Alerta> {
     return this.http
       .get<AlertaApi>(
         `${environment.apiUrl}/notification/alarm/${id}`,
@@ -107,10 +107,10 @@ export class AlertaService {
       );
   }
 
-  gestionar(data: AlertaGestion, id: Number): Observable<any> {
+  gestionar(data: AlertaGestion, id: number): Observable<any> {
     return this.http
       .post<any>(
-        `${environment.apiUrl}/alarm/categorize/${id}/`,
+        `${environment.apiUrl}/notification/alarm/categorize/${id}/`,
         data,
         this.headers
       )
@@ -156,7 +156,7 @@ export class AlertaService {
     this.agregarAlerta(nuevaAlerta);
   }
 
-  obtenerPorId(id: Number): Alerta | undefined {
+  obtenerPorId(id: number): Alerta | undefined {
     return this.alertas.find((alerta) => alerta.id == id);
   }
 

@@ -4,13 +4,16 @@
     <ion-grid class="alerta-descarte">
       <ion-row>
         <ion-col class="formulario-titulo">
+          <ion-button fill="clear" color="dark" (click)="pasoAnterior()"><ion-icon name="arrow-back"
+              size="large"></ion-icon></ion-button>
           <h1>Seleccione un motivo de descarte</h1>
+          <div></div>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center formulario-contenido">
         <ion-col size="12" size-md="4" *ngFor="let motivo of listadoOpciones; let i = index">
           <ion-button expand="block" class="custom-button ion-text-wrap"
-            [ngClass]="opcionSeleccionada === i ? 'active' : ''" (click)="seleccionarOpcion(i)">
+            [ngClass]="opcionDescarteSeleccionado === i ? 'active' : ''" (click)="seleccionarOpcion(i)">
             {{motivo.value}}
           </ion-button>
         </ion-col>
@@ -22,24 +25,29 @@
     <ion-grid class="alerta-control">
       <ion-row>
         <ion-col class="formulario-titulo">
+          <ion-button fill="clear" color="dark" (click)="pasoAnterior()"><ion-icon name="arrow-back"
+              size="large"></ion-icon></ion-button>
           <h1>Ingrese monto recuperado</h1>
+          <div></div>
         </ion-col>
       </ion-row>
       <ion-row class="formulario-contenido">
         <ion-col size="12" size-md="8">
           <ion-card class="card-input">
             <ion-icon name="logo-usd"></ion-icon>
-            <ion-input type="number" fill="solid" placeholder="Ingrese monto"></ion-input>
+            <ion-input type="number" fill="solid" placeholder="Ingrese monto" [(ngModel)]="valorMontoRecuperacion"
+              (ngModelChange)='cambiarMontoRecuperacion()' [disabled]="opcionMontoRecuperacion"></ion-input>
           </ion-card>
         </ion-col>
         <ion-col size="12" size-md="4">
-          <ion-button expand="block" class="custom-button">
-            <ion-icon name="checkbox" slot="start"></ion-icon>
+          <ion-button expand="block" class="custom-button" (click)="seleccionarDetenido()">
+            <ion-icon [name]="opcionDetenido ? 'checkbox' : 'square-outline'" slot="start"></ion-icon>
             <span>Detenido</span>
           </ion-button>
         </ion-col>
         <ion-col size="12">
-          <ion-button expand="block" class="custom-button active">
+          <ion-button expand="block" class="custom-button" [ngClass]="opcionMontoRecuperacion ? 'active' : ''"
+            (click)="seleccionarSinRecuperacion()">
             Sin recuperación
           </ion-button>
         </ion-col>

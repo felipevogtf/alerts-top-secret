@@ -52,7 +52,7 @@ export class ListadoAlertasComponent implements OnInit {
     }
   }
 
-  verAlerta(id: Number): void {
+  verAlerta(id: number): void {
     this.router.navigate(['/alerta', id]);
   }
 

@@ -3,7 +3,7 @@ import { AlertaEstado } from './alerta-estado.model';
 import { AlertaTipo } from './alerta-tipo.model';
 
 export interface Alerta {
-  id: Number;
+  id: number;
   tipo: AlertaTipo;
   zona: number;
   caja: number;
@@ -12,7 +12,7 @@ export interface Alerta {
   estado_gestion: AlertaEstadoGestion | null;
   fechaVencimiento?: Date;
   imagen?: string;
-  ultimasCompras?: LastTransaction[]
+  ultimasCompras?: LastTransaction[];
 }
 
 export interface AlertaSocket {

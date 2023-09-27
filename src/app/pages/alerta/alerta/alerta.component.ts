@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertaPaso } from '../models/steps.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertaService } from 'src/app/services/alerta.service';
 import { Alerta, AlertaGestion } from 'src/app/models/alerta/alerta.model';
 import { AlertaEstadoGestion } from 'src/app/models/alerta/alerta-estado-gestion.model';
 import { AlertaEstado } from 'src/app/models/alerta/alerta-estado.model';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-alerta',
@@ -19,10 +20,16 @@ export class AlertaComponent implements OnInit {
   isLoading: Boolean = false;
   isGestionLoading: Boolean = false;
 
+  descarte: number = 0;
+  recuperacion: boolean = false;
+  detenido: boolean = false;
+  montoRecuperacion: number = 0;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private alertaService: AlertaService
+    private alertaService: AlertaService,
+    private toastController: ToastController
   ) {
     this.alertaExist = false;
   }
@@ -33,7 +40,6 @@ export class AlertaComponent implements OnInit {
 
       if (id) {
         this.alerta = this.alertaService.obtenerPorId(parseInt(id));
-
         if (!this.alerta || !this.alerta!!.imagen) {
           this.alertaExist = false;
           this.obtenerAlerta(parseInt(id));
@@ -44,7 +50,15 @@ export class AlertaComponent implements OnInit {
     });
   }
 
-  obtenerAlerta(id: Number) {
+  ionViewWillLeave() {
+    this.alerta = null;
+    this.alertaExist = false;
+    this.isLoading = false;
+    this.isGestionLoading = false;
+    this.currentPaso = AlertaPaso.Preview;
+  }
+
+  obtenerAlerta(id: number) {
     this.setLoading(true);
     this.alertaService.getAlerta(id).subscribe({
       next: (response) => {
@@ -99,25 +113,51 @@ export class AlertaComponent implements OnInit {
     }
   }
 
+  obtenerMotivoDescarte(motivo: number | null) {
+    if (motivo) {
+      this.descarte = motivo;
+    } else {
+      this.descarte = 0;
+    }
+  }
+
+  obtenerMontoRecuperacion(monto: number | null) {
+    if (monto) {
+      this.montoRecuperacion = monto;
+    } else {
+      this.montoRecuperacion = 0;
+    }
+  }
+
+  obtenerDetenido(detenido: boolean) {
+    this.detenido = detenido;
+  }
+
+  obtenerRecuperacion(recuperacion: boolean) {
+    this.recuperacion = recuperacion;
+  }
+
   gestionar() {
     if (!this.alerta) {
       return;
     }
 
     const data: AlertaGestion = {
-      is_alarm: true,
-      losses: 100,
-      recover: false,
-      discard: 1,
+      is_alarm: this.detenido,
+      losses: this.montoRecuperacion,
+      recover: this.recuperacion,
+      discard: this.descarte,
     };
 
     this.setGestionLoading(true);
     this.alertaService.gestionar(data, this.alerta.id).subscribe({
       next: (response: any) => {
-        console.log(response);
+        this.presentToast('top', 'Alerta gestionada con exito!');
+        this.router.navigate(['/']);
         this.setGestionLoading(false);
       },
       error: (error: Error) => {
+        this.presentToast('top', 'Ha ocurrido un problema, intente nuevamente');
         console.error('Error en la solicitud:', error);
         this.setGestionLoading(false);
       },
@@ -130,5 +170,20 @@ export class AlertaComponent implements OnInit {
     } else {
       return 'background-default';
     }
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom', mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 1500,
+      position: position,
+      color: 'dark',
+    });
+
+    await toast.present();
+  }
+
+  pasoAnterior() {
+    this.currentPaso = AlertaPaso.Preview;
   }
 }

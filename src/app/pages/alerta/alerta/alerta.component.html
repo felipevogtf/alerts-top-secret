@@ -22,7 +22,9 @@
 
     <div [ngSwitch]="currentPaso" class="step-content">
       <ng-template [ngSwitchCase]="AlertaPasos.Gestion">
-        <alerta-gestion [alerta]="alerta"></alerta-gestion>
+        <alerta-gestion [alerta]="alerta" (motivoDescarte)="obtenerMotivoDescarte($event)"
+          (montoRecuperacion)="obtenerMontoRecuperacion($event)" (detenido)="obtenerDetenido($event)" (back)="pasoAnterior()"
+          (recuperacion)="obtenerRecuperacion($event)"></alerta-gestion>
       </ng-template>
       <ng-template ngSwitchDefault>
         <alerta-preview [alerta]="alerta"></alerta-preview>
@@ -38,7 +40,10 @@
         <ng-template [ngSwitchCase]="AlertaPasos.Gestion">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" color="primary" size="large" (click)="gestionar()">Enviar</ion-button>
+              <ion-button expand="block" color="primary" size="large" (click)="gestionar()">
+                <span *ngIf="!isGestionLoading">Enviar</span>
+                <ion-spinner name="dots" *ngIf="isGestionLoading"></ion-spinner>
+              </ion-button>
             </ion-col>
           </ion-row>
         </ng-template>

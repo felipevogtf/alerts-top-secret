@@ -1,56 +1,59 @@
 .custom-button {
-    --background: white;
-    --background-hover: rgba(211, 211, 211, 0.137);
-    --background-activated: rgba(211, 211, 211, 0.233);
-    --border-style: solid;
-    --border-radius: 8px;
-    --border-color: lightgray;
-    --border-width: 1px;
-    --padding-bottom: 20px;
-    --padding-top: 20px;
-    --color: var(--ion-color-primary);
-    height: 100%;
-    margin: 0;
+  --background: white;
+  --background-hover: rgba(211, 211, 211, 0.137);
+  --background-activated: rgba(211, 211, 211, 0.233);
+  --border-style: solid;
+  --border-radius: 8px;
+  --border-color: lightgray;
+  --border-width: 1px;
+  --padding-bottom: 20px;
+  --padding-top: 20px;
+  --color: var(--ion-color-primary);
+  height: 100%;
+  margin: 0;
 }
 
 .active {
-    --background: var(--ion-color-primary);
-    --color: var(--ion-color-primary-contrast);
-    --border-style: none;
-    --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+  --border-style: none;
+  --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .card-input {
-    --background: white;
-    box-shadow: none;
-    padding: 10px;
-    margin: 0;
-    height: calc(100% - 1px);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: inherit;
+  --background: white;
+  box-shadow: none;
+  padding: 10px;
+  margin: 0;
+  height: calc(100% - 1px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: inherit;
 
-    ion-icon{
-        padding-left: 10px;
-        padding-right: 10px;
-        font-size: 1.3em;
-    }
+  ion-icon {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1.3em;
+  }
 
-    ion-input {
-        margin-top: auto;
-        margin-bottom: auto;
-    }
+  ion-input {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }
 
-.alerta-control, .alerta-descarte{
+.alerta-control,
+.alerta-descarte {
+  margin-top: 50px;
+
+  .formulario-titulo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .formulario-contenido {
     margin-top: 50px;
-
-    .formulario-titulo{
-        text-align: center;
-    }
-
-    .formulario-contenido{
-        margin-top: 50px;
-    }
+  }
 }

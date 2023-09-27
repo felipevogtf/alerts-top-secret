@@ -3,12 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, retry, throwError } from 'rxjs';
 import { LoginData, LoginResponse } from '../models/login/login.model';
 import { environment } from 'src/environments/environment';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private storagaService: StorageService
+  ) {}
 
   login(data: LoginData): Observable<LoginResponse> {
     const httpOptions = {
@@ -41,5 +45,18 @@ export class AuthService {
           return throwError(() => new Error(errorMessage));
         })
       );
+  }
+
+  logout() {
+    return new Promise((res, rej) => {
+      try {
+        this.storagaService.remove('_t');
+        this.storagaService.remove('_r');
+        this.storagaService.remove('_ut');
+        res(true);
+      } catch (error) {
+        rej();
+      }
+    });
   }
 }
